@@ -50,6 +50,14 @@ int main() {
     long double view_len = 7.0;
     long double mouse_sens = 0.3;
     long double collision_step = 0.005;
+    sf::Vertex bott[] =
+    {
+        sf::Vertex(sf::Vector2f(0, _height * 0.2), sf::Color::Black),
+        sf::Vertex(sf::Vector2f(_width, _height * 0.2), sf::Color::Black),
+        sf::Vertex(sf::Vector2f(_width, _height), sf::Color(128, 128, 128)),
+        sf::Vertex(sf::Vector2f(0, _height), sf::Color(128, 128, 128))
+    };
+    
 
     sf::Vector2i lastMousePosition = sf::Mouse::getPosition(window);
     bool mouse_in_place = true;
@@ -61,8 +69,7 @@ int main() {
     font.loadFromFile("PressStart2P.ttf");
     text.setFont(font);
     text.setPosition(sf::Vector2f(0, 0));
-    //text.setCharacterSize(24);
-    //text.setFillColor(sf::Color::Red);
+    
     window.setFramerateLimit(60);
 
     while (window.isOpen()) {
@@ -75,6 +82,8 @@ int main() {
         }
 
         window.clear(sf::Color::Black);
+
+        window.draw(bott, 4, sf::Quads);
 
         dir_x = 0;
         dir_y = 0;
@@ -143,7 +152,7 @@ int main() {
                 curr_y = ((curr_y % n) + n) % n;
 
                 if (map[curr_x][curr_y] == 1) {
-                    rect[x].setFillColor(sf::Color(255, 255, 255, 255.0 * (view_len - len) / view_len));
+                    rect[x].setFillColor(sf::Color(64, 64, 255, 255.0 * (1.0 - (len / view_len))));
                     long double block_h = _height / (len * cos(delta_a * PI / 240));
                     rect[x].setSize(sf::Vector2f(_w, block_h));
                     rect[x].setPosition(sf::Vector2f(_w * x, _height / 2 - block_h / 2));
